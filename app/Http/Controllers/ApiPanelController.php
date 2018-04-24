@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categories;
 use Illuminate\Http\Request;
 
 class ApiPanelController extends Controller
@@ -18,6 +19,13 @@ class ApiPanelController extends Controller
 
     public function loginForm(){
         return view('api.user.loginuser');
+    }
+
+    public function getnewsByCategoriesId()
+    {
+            $categories= Categories::all();
+         return view('api.user.getnewsByCategoriesId',compact('categories'));
+
     }
 
 }

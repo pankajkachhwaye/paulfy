@@ -21,6 +21,7 @@
     <div>
         <p><a href="{{url('/api-details/register-form')}}">User Register</a></p>
         <p><a href="{{url('/api-details/login-form')}}">User Login</a></p>
+        <p><a href="{{url('/api-details/getnewsByCategoriesId')}}">getnewsByCategoriesId</a></p>
     </div>
 
 </div>

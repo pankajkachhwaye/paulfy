@@ -70,7 +70,6 @@ class UserController extends Controller
         if($data->password == null){
             array_push($returnArray,'Please enter password');
         }
-
         return $returnArray;
     }
 }

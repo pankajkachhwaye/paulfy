@@ -78,7 +78,7 @@
 
     });
 
-</script>
+</script>x
 
 </body>
 </html>
