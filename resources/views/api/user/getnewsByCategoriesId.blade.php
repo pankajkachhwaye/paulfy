@@ -13,7 +13,7 @@
 <body>
 
 <h1>
-    URL::   {{url('/').'/api/register'}}
+    URL::   {{url('/').'/api/getnewsByCategoriesId'}}
 
 </h1>
 <form method="POST" enctype="multipart/form-data" action="{{url('/api/getnewsByCategoriesId')}}" >

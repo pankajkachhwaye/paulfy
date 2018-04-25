@@ -21,15 +21,22 @@ class RssfeedApiController extends Controller
 
         $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('comment')->get();
 
-            foreach ($rssfeed as $k=>$v )
+            if($rssfeed) {
+                foreach ($rssfeed as $k => $v) {
+                    $rssfeed[$k]->description = str_replace('"', "'", $v->description);
+
+                }
+
+
+                return Response::json(['code' => 200, 'status' => true, 'message' => 'All News Data', 'data' =>
+                    $rssfeed]);
+            }
+            else
             {
-                $rssfeed[$k]->description= str_replace('"',"'", $v->description);
+                return Response::json(['code' => 400, 'status' => false, 'message' => 'Something wrong...', 'data' =>
+                    ""]);
 
             }
-
-
-        return Response::json(['code' => 200,'status' => true, 'message' => 'User login successfully','data'=>$rssfeed]);
-
     }
 
     public  function getAllCategories()
