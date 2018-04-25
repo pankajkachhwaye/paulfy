@@ -71,19 +71,13 @@ class RssfeedController extends Controller
         );
         foreach ($data['items'] as $item)
         {
-
-
             print_r($item->get_content());
-
             $rssfeed=new Rssfeed;
-
-
             $rssfeed->categories_id= Categories::where('name','Entertainment')->first()->id;
             $rssfeed->title=$item->get_title();
             $rssfeed->title_url= $item->get_permalink();
             $rssfeed->description=$item->get_content();
             $rssfeed->news_upload_time=$item->get_date('j F Y | g:i a');
-
             $rssfeed->save();
 
 

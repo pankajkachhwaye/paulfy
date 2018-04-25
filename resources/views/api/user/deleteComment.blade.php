@@ -13,25 +13,14 @@
 <body>
 
 <h1>
-    URL::   {{url('/').'/api/register'}}
+    URL::   {{url('/').'/api/deleteComment'}}
 
 </h1>
-<form method="POST" enctype="multipart/form-data" action="{{url('/api/getnewsByCategoriesId')}}" >
+<form method="POST" enctype="multipart/form-data" action="{{url('/api/deleteComment')}}" >
 
 
 
-    <br/>
-    Select Categories(categories_id){ send array like [1,2,3]  } ::  * <select multiple name="categories_id[]">
-
-        @foreach($categories as $categories)
-
-
-        <option value="{{$categories->id}}">{{$categories->name}}</option>
-            @endforeach
-
-    </select>
-    <br/>
-    <br/>
+    Delete Comment (comment_id):: <input type="text" name="comment_id">
 
 
 

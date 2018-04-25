@@ -17,9 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::group(['namespace' => 'Api',],function (){
+    Route::group(['namespace' => 'Api',],function (){
     Route::post('/register','UserController@register');
     Route::post('/login','UserController@login');
-   Route::post('/getnewsByCategoriesId','RssfeedApiController@getnewsByCategoriesId');
+    Route::get('/getAllCategories','RssfeedApiController@getAllCategories');
+    Route::post('/getAllCategories','RssfeedApiController@getAllCategories');
+    Route::post('/getnewsByCategoriesId','RssfeedApiController@getnewsByCategoriesId');
+    Route::post('/likeNews','RssfeedApiController@likeNews');
+    Route::post('/commentNews','RssfeedApiController@commentNews');
+    Route::post('/bookmarkNews','RssfeedApiController@bookmarkNews');
+
 });

@@ -20,8 +20,14 @@ Route::get('/updateRssFeeds','Rss\RssfeedController@updateRssFeeds');
 Route::group(['prefix' => 'api-details'],function (){
     Route::get('/','ApiPanelController@index');
     Route::get('/register-form','ApiPanelController@registerForm');
+    Route::get('/getAllCategories','ApiPanelController@getAllCategories');
     Route::get('/login-form','ApiPanelController@loginForm');
     Route::get('/getnewsByCategoriesId','ApiPanelController@getnewsByCategoriesId');
+    Route::get('/likeNews','ApiPanelController@likeNews');
+    Route::get('/commentOnNews','ApiPanelController@commentOnNews');
+    Route::get('/bookmarkNews','ApiPanelController@bookmarkNews');
+    Route::get('/deleteComment','ApiPanelController@deleteComment');
+    Route::get('/deleteBookmark','ApiPanelController@deleteBookmark');
 
 });
 

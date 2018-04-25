@@ -21,7 +21,13 @@
     <div>
         <p><a href="{{url('/api-details/register-form')}}">User Register</a></p>
         <p><a href="{{url('/api-details/login-form')}}">User Login</a></p>
+        <p><a href="{{url('/api-details/getAllCategories')}}">getAllCategories</a></p>
         <p><a href="{{url('/api-details/getnewsByCategoriesId')}}">getnewsByCategoriesId</a></p>
+        <p><a href="{{url('/api-details/likeNews')}}">likeNews</a></p>
+        <p><a href="{{url('/api-details/commentOnNews')}}">commentOnNews</a></p>
+        <p><a href="{{url('/api-details/bookmarkNews')}}">bookmarkNews</a></p>
+        <p><a href="{{url('/api-details/deleteComment')}}">deleteComment</a></p>
+        <p><a href="{{url('/api-details/deleteBookmark')}}">deleteBookmark</a></p>
     </div>
 
 </div>

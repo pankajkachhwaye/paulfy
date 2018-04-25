@@ -13,25 +13,14 @@
 <body>
 
 <h1>
-    URL::   {{url('/').'/api/register'}}
+    URL::   {{url('/').'/api/deleteBookmark'}}
 
 </h1>
-<form method="POST" enctype="multipart/form-data" action="{{url('/api/getnewsByCategoriesId')}}" >
+<form method="POST" enctype="multipart/form-data" action="{{url('/api/deleteBookmark')}}" >
 
 
 
-    <br/>
-    Select Categories(categories_id){ send array like [1,2,3]  } ::  * <select multiple name="categories_id[]">
-
-        @foreach($categories as $categories)
-
-
-        <option value="{{$categories->id}}">{{$categories->name}}</option>
-            @endforeach
-
-    </select>
-    <br/>
-    <br/>
+    Delete Bookmark (bookmark_id):: <input type="text" name="bookmark_id">
 
 
 

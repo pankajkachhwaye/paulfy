@@ -13,27 +13,14 @@
 <body>
 
 <h1>
-    URL::   {{url('/').'/api/register'}}
+    URL::   {{url('/').'/api/getAllCategories'}}
 
 </h1>
-<form method="POST" enctype="multipart/form-data" action="{{url('/api/getnewsByCategoriesId')}}" >
+<form method="POST" enctype="multipart/form-data" action="{{url('/api/getAllCategories')}}">
 
 
 
-    <br/>
-    Select Categories(categories_id){ send array like [1,2,3]  } ::  * <select multiple name="categories_id[]">
-
-        @foreach($categories as $categories)
-
-
-        <option value="{{$categories->id}}">{{$categories->name}}</option>
-            @endforeach
-
-    </select>
-    <br/>
-    <br/>
-
-
+    This is get api api just hit the url and get data
 
     <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">Submit</button>
 
