@@ -13,10 +13,10 @@
 <body>
 
 <h1>
-    URL::   {{url('/').'/api/likeNews'}}
+    URL::   {{url('/').'/api/commentNews'}}
 
 </h1>
-<form method="POST" enctype="multipart/form-data" action="{{url('/api/likeNews')}}" >
+<form method="POST" enctype="multipart/form-data" action="{{url('/api/commentNews')}}" >
 
 
 

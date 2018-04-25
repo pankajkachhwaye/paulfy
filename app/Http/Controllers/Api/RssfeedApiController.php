@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 //use http\Env\Response;
+use App\Models\Bookmark;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Rssfeed;
 use App\Models\Categories;
+use App\Models\Likes;
+use App\Models\Comment;
 use Response;
+use Carbon\Carbon;
 
 class RssfeedApiController extends Controller
 {
@@ -15,7 +19,7 @@ class RssfeedApiController extends Controller
     public function getnewsByCategoriesId(Request $request)
     {
 
-        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->get();
+        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('comment')->get();
 
             foreach ($rssfeed as $k=>$v )
             {
@@ -24,7 +28,6 @@ class RssfeedApiController extends Controller
             }
 
 
-//        dd($rssfeed->toArray());
         return Response::json(['code' => 200,'status' => true, 'message' => 'User login successfully','data'=>$rssfeed]);
 
     }
@@ -37,18 +40,57 @@ class RssfeedApiController extends Controller
 
      public function likeNews(Request $request)
      {
-         //toggle like dislike
-         dd($request->toArray());
+            $likes= array();
+            $likes['news_id']=$request->news_id;
+            $likes['user_id']=$request->user_id;
+            $likes['like']=$request->like;
+            $likes['created_at']=Carbon::now();
+            $id = Likes::insertGetId($likes);
+            if(!empty($id))
+            {
+                return Response::json(['code' => 200,'status' => true, 'message' => 'Like successfully' ,
+                    'data'=>$likes]);
+            }
+            else
+            {
+                return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
+                    'data'=>""]);
+
+            }
+
      }
      public function commentNews(Request $request)
      {
-                dd($request->toArray());
+                //dd($request->toArray());
+                $comment= new Comment;
+                $comment->news_id=$request->news_id;
+                $comment->user_id=$request->user_id;
+                $comment->comment=$request->comment;
+                $comment->save();
 
-            //commentonnews
+         if( $comment->save())
+         {
+             return Response::json(['code' => 200,'status' => true, 'message' => 'Comment Successfully' ,
+                 'data'=>$comment]);
+         }
+         else
+         {
+             return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
+                 'data'=>""]);
+
+         }
+
      }
      public function bookmarkNews(Request $request)
      {
-            //savebookmarks
-           dd($request->toArray());
+            $bookmark = new Bookmark();
+
+         $bookmark->news_id=$request->user_id;
+         $bookmark->user_id=$request->user_id;
+
+
+
+
+
      }
 }

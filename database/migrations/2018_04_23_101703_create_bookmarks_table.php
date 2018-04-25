@@ -22,7 +22,7 @@ class CreateBookmarksTable extends Migration
                 ->onDelete('cascade');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')
-                ->references('id')->on('users')
+                ->references('id')->on('app_users')
                 ->onDelete('cascade');
             $table->string('bookmarks');
             $table->timestamps();

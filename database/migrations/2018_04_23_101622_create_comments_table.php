@@ -23,7 +23,7 @@ class CreateCommentsTable extends Migration
 
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')
-                ->references('id')->on('users')
+                ->references('id')->on('app_users')
                 ->onDelete('cascade');
             $table->text('comment');
 
