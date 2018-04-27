@@ -33,6 +33,19 @@
     <br/>
     <br/>
 
+    <br/>
+    Select User (user_id) ::  * <select name="user_id">
+        <option>--select user--</option>
+        @foreach($users as $user)
+
+
+            <option value="{{$user->id}}">{{$user->email}}</option>
+        @endforeach
+
+    </select>
+    <br/>
+    <br/>
+
 
 
     <button class="btn btn-block btn-lg bg-pink waves-effect" type="submit">Submit</button>

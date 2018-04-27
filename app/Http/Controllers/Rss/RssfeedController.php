@@ -218,6 +218,7 @@ class RssfeedController extends Controller
     public function updateFeeds()
     {
 
+
         $businessfeed= \Feeds::make(['http://feeds.feedburner.com/entrepreneur/latest','http://rss.cnn
         .com/rss/money_news_international.rss','https://nairametrics.com/feed/','http://markets.businessinsider.com/rss/news','https://www.cnbcafrica.com/feed/'],100,true);
 

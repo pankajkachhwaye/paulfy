@@ -17,4 +17,13 @@ class Likes extends Model
                 belongsTo(Rssfeed::class,'news_id');
 
             }
+
+            public function scopeCheckLike($query,$news_id,$user_id)
+            {
+                return $query->where(function($query) use ($news_id,$user_id) {
+                    $query->where('news_id', $news_id)
+                        ->Where('user_id', $user_id);
+                });
+
+            }
 }

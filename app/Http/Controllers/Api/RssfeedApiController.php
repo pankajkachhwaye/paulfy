@@ -23,8 +23,22 @@ class RssfeedApiController extends Controller
 
             if($rssfeed) {
                 foreach ($rssfeed as $k => $v) {
-                    $rssfeed[$k]->description = str_replace('"', "'", $v->description);
 
+                    $rssfeed[$k]->isLike= false;
+
+                      foreach ($rssfeed[$k]->likes as $value)
+                      {
+                          if($value->user_id== $request->user_id)
+                          {
+                              $rssfeed[$k]->isLike= true;
+                          }
+                      }
+
+                    $rssfeed[$k]->description = str_replace('"', "'", $v->description);
+                    $rssfeed[$k]->likeCount= count($rssfeed[$k]->likes);
+                    $rssfeed[$k]->commentCount= count($rssfeed[$k]->comment);
+
+//                    $rssfeed[$k]->comment =  ;
                 }
 
 
@@ -52,23 +66,40 @@ class RssfeedApiController extends Controller
             $likes['user_id']=$request->user_id;
             $likes['like']=$request->like;
             $likes['created_at']=Carbon::now();
-            $id = Likes::insertGetId($likes);
-            if(!empty($id))
+
+//            $checklike= Likes::whereIn([['news_id', '=',$request->news_id] , ['user_id','=',$request->user_id]])
+//                ->first();
+         $checklike= Likes::CheckLike($request->news_id,$request->user_id)->first();
+
+            if ($checklike)
             {
-                return Response::json(['code' => 200,'status' => true, 'message' => 'Like successfully' ,
-                    'data'=>$likes]);
+                return Response::json(['code' => 400,'status' => false, 'message' => 'You already like this news' ,
+                    'data'=>'']);
             }
             else
             {
-                return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
-                    'data'=>""]);
+
+                $id = Likes::insertGetId($likes);
+                if(!empty($id))
+                {
+                    return Response::json(['code' => 200,'status' => true, 'message' => 'Like successfully' ,
+                        'data'=>$likes]);
+                }
+                else
+                {
+                    return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
+                        'data'=>""]);
+
+                }
 
             }
+
+
 
      }
      public function commentNews(Request $request)
      {
-                //dd($request->toArray());
+
                 $comment= new Comment;
                 $comment->news_id=$request->news_id;
                 $comment->user_id=$request->user_id;
@@ -90,14 +121,11 @@ class RssfeedApiController extends Controller
      }
      public function bookmarkNews(Request $request)
      {
-            $bookmark = new Bookmark();
-
+         $bookmark = new Bookmark();
          $bookmark->news_id=$request->user_id;
          $bookmark->user_id=$request->user_id;
 
 
-
-
-
      }
+
 }

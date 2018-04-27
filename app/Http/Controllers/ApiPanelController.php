@@ -29,8 +29,9 @@ class ApiPanelController extends Controller
 
     public function getnewsByCategoriesId()
     {
+        $users= AppUser::all();
          $categories= Categories::all();
-         return view('api.user.getnewsByCategoriesId',compact('categories'));
+         return view('api.user.getnewsByCategoriesId',compact('categories','users'));
 
     }
 
