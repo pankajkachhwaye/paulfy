@@ -13,10 +13,10 @@
 <body>
 
 <h1>
-    URL::   {{url('/').'/api/likeNews'}}
+    URL::   {{url('/').'/api/bookmarkNews'}}
 
 </h1>
-<form method="POST" enctype="multipart/form-data" action="{{url('/api/likeNews')}}" >
+<form method="POST" enctype="multipart/form-data" action="{{url('/api/bookmarkNews')}}" >
 
 
 
@@ -43,14 +43,7 @@
         @endforeach
 
     </select>
-    <br/>
-    <br/>
-    Bookmark(bookmark) ::  * <select name="like">
-        <option>-- Select like /dislike--</option>
-        <option value="1"> Like </option>
 
-    </select>
-    <br/> <br/>
 
 
 

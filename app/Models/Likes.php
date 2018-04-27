@@ -26,4 +26,14 @@ class Likes extends Model
                 });
 
             }
+
+            public function scopeDislike($query,$user_id,$id)
+            {
+                    return $query->where(function($query) use ($user_id,$id){
+
+                        $query->where('user_id',$user_id)
+                            ->where('id',$id);
+            });
+
+            }
 }

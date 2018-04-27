@@ -31,6 +31,7 @@ class RssfeedApiController extends Controller
                           if($value->user_id== $request->user_id)
                           {
                               $rssfeed[$k]->isLike= true;
+                              break;
                           }
                       }
 
@@ -79,6 +80,7 @@ class RssfeedApiController extends Controller
             else
             {
 
+
                 $id = Likes::insertGetId($likes);
                 if(!empty($id))
                 {
@@ -94,8 +96,6 @@ class RssfeedApiController extends Controller
 
             }
 
-
-
      }
      public function commentNews(Request $request)
      {
@@ -104,7 +104,7 @@ class RssfeedApiController extends Controller
                 $comment->news_id=$request->news_id;
                 $comment->user_id=$request->user_id;
                 $comment->comment=$request->comment;
-                $comment->save();
+              //  $comment->save();
 
          if( $comment->save())
          {
@@ -119,12 +119,64 @@ class RssfeedApiController extends Controller
          }
 
      }
+
+     public function deleteCommentNews()
+     {
+
+     }
      public function bookmarkNews(Request $request)
      {
-         $bookmark = new Bookmark();
-         $bookmark->news_id=$request->user_id;
+         $bookmark = new Bookmark;
          $bookmark->user_id=$request->user_id;
+         $bookmark->news_id=$request->news_id;
 
+         $checkbookmark= Bookmark::CheckBookmark($request->news_id,$request->user_id)->first();
+
+         if($checkbookmark)
+         {
+
+             return Response::json(['code' => 400,'status' => false, 'message' => 'News Already Save' ,
+                 'data'=>$bookmark]);
+         }
+         else
+         {
+             if($bookmark->save())
+             {
+                 return Response::json(['code' => 200,'status' => true, 'message' => 'News Save Successfully' ,
+                     'data'=>$bookmark]);
+             }
+             else
+             {
+                 return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
+                     'data'=>""]);
+
+             }
+
+         }
+
+     }
+
+
+
+     public function dislikeNews(Request $request)
+     {
+         $data= Likes::Dislike($request->user_id,$request->id)->delete();
+
+         if($data)
+         {
+             return Response::json(['code' => 200,'status' => true, 'message' => ' Dislike successfully ',
+                 'data'=>""]);
+
+         }
+         else
+         {
+             return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
+                 'data'=>""]);
+         }
+     }
+
+     public function getAllBokkmarkNews(Request $request)
+     {
 
      }
 

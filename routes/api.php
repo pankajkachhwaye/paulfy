@@ -24,7 +24,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::post('/getAllCategories','RssfeedApiController@getAllCategories');
     Route::post('/getnewsByCategoriesId','RssfeedApiController@getnewsByCategoriesId');
     Route::post('/likeNews','RssfeedApiController@likeNews');
+    Route::post('/dislikeNews','RssfeedApiController@dislikeNews');
+
     Route::post('/commentNews','RssfeedApiController@commentNews');
+    Route::post('/deleteCommentNews','RssfeedApiController@deleteCommentNews');
+
     Route::post('/bookmarkNews','RssfeedApiController@bookmarkNews');
+    Route::post('/getBookmarkNews','RssfeedApiController@getBookmarkNews');
+    Route::post('/deleteBookmarkNews','RssfeedApiController@deleteBookmarkNews');
 
 });
