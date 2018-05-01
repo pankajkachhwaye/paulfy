@@ -28,6 +28,7 @@
         <p><a href="{{url('/api-details/bookmarkNews')}}">bookmarkNews</a></p>
         <p><a href="{{url('/api-details/deleteComment')}}">deleteComment</a></p>
         <p><a href="{{url('/api-details/deleteBookmark')}}">deleteBookmark</a></p>
+        <p><a href="{{url('/api-details/getAllBokkmarkNews')}}">getAllBokkmarkNews</a></p>
     </div>
 
 </div>

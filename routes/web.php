@@ -29,6 +29,7 @@ Route::group(['prefix' => 'api-details'],function (){
     Route::get('/bookmarkNews','ApiPanelController@bookmarkNews');
     Route::get('/deleteComment','ApiPanelController@deleteComment');
     Route::get('/deleteBookmark','ApiPanelController@deleteBookmark');
+    Route::get('/getAllBokkmarkNews','ApiPanelController@getAllBokkmarkNews');
 
 });
 

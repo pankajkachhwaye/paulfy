@@ -54,13 +54,21 @@ class ApiPanelController extends Controller
         $users= AppUser::all();
         return view('api.user.bookmarkNews',compact('news','users'));
     }
+    public function getAllBokkmarkNews()
+    {
+//        $news= Rssfeed::all();
+        $users= AppUser::all();
+        return view('api.user.getAllSaveNews',compact('users'));
+    }
+
     public function deleteComment()
     {
         return view('api.user.deleteComment');
     }
     public function deleteBookmark()
     {
-        return view('api.user.deleteBookmark');
+        $users= AppUser::all();
+        return view('api.user.deleteBookmark',compact('users'));
 
     }
 

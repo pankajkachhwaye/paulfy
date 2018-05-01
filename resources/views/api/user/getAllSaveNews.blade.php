@@ -13,27 +13,26 @@
 <body>
 
 <h1>
-    URL::   {{url('/').'/api/deleteBookmarks'}}
+    URL::   {{url('/').'/api/getAllBokkmarkNews'}}
 
 </h1>
-<form method="POST" enctype="multipart/form-data" action="{{url('/api/deleteBookmarks')}}" >
+<form method="POST" enctype="multipart/form-data" action="{{url('/api/getAllBokkmarkNews')}}" >
 
 
 
-    Delete Bookmark (bookmark_id):: <input type="text" name="bookmark_id">
-
-    <br/>
 
     <br/>
-    Select User (user_id) ::  *<select name="user_id">
+    Select User (user_id) ::  * <select name="user_id">
         <option>--select user--</option>
         @foreach($users as $user)
+
+
             <option value="{{$user->id}}">{{$user->email}}</option>
         @endforeach
 
     </select>
     <br/>
-    <br/>
+
 
 
 

@@ -19,7 +19,9 @@ class RssfeedApiController extends Controller
     public function getnewsByCategoriesId(Request $request)
     {
 
-        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('comment')->get();
+        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('comment')->with('bookmark')
+        ->orderBy('created_at','desc')
+        ->get();
 
             if($rssfeed) {
                 foreach ($rssfeed as $k => $v) {
@@ -35,9 +37,23 @@ class RssfeedApiController extends Controller
                           }
                       }
 
+                      // chek is news save or not
+                    $rssfeed[$k]->isSave= false;
+
+                    foreach ($rssfeed[$k]->bookmark as $value)
+                    {
+                        if($value->user_id== $request->user_id)
+                        {
+                            $rssfeed[$k]->isSave= true;
+                            break;
+                        }
+                    }
+        /// add extra perametor
                     $rssfeed[$k]->description = str_replace('"', "'", $v->description);
                     $rssfeed[$k]->likeCount= count($rssfeed[$k]->likes);
                     $rssfeed[$k]->commentCount= count($rssfeed[$k]->comment);
+
+
 
 //                    $rssfeed[$k]->comment =  ;
                 }
@@ -65,7 +81,7 @@ class RssfeedApiController extends Controller
             $likes= array();
             $likes['news_id']=$request->news_id;
             $likes['user_id']=$request->user_id;
-            $likes['like']=$request->like;
+            $likes['like']=1;
             $likes['created_at']=Carbon::now();
 
 //            $checklike= Likes::whereIn([['news_id', '=',$request->news_id] , ['user_id','=',$request->user_id]])
@@ -74,8 +90,20 @@ class RssfeedApiController extends Controller
 
             if ($checklike)
             {
-                return Response::json(['code' => 400,'status' => false, 'message' => 'You already like this news' ,
-                    'data'=>'']);
+
+                $data= Likes::Dislike($request->user_id,$request->news_id)->delete();
+
+                if($data)
+                {
+                    return Response::json(['code' => 200,'status' => true, 'message' => ' Dislike successfully ',
+                        'data'=>""]);
+
+                }
+                else
+                {
+                    return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
+                        'data'=>""]);
+                }
             }
             else
             {
@@ -156,6 +184,27 @@ class RssfeedApiController extends Controller
 
      }
 
+     public function deleteBookmarks(Request $request)
+     {
+         //dd($request->toArray());
+
+         $data= Bookmark::DeleteBookmark($request->user_id,$request->bookmark_id)->delete();
+
+         if($data)
+         {
+             return Response::json(['code' => 200,'status' => true, 'message' => ' Delete successfully ',
+                 'data'=>""]);
+
+         }
+         else
+         {
+             return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
+                 'data'=>""]);
+         }
+
+
+     }
+
 
 
      public function dislikeNews(Request $request)
@@ -177,6 +226,20 @@ class RssfeedApiController extends Controller
 
      public function getAllBokkmarkNews(Request $request)
      {
+
+            $data= Bookmark::with('news')->where('user_id',$request->user_id)->get();
+//            dd($data);
+         if($data)
+         {
+                 return Response::json(['code' => 200, 'status' => true, 'message' => 'All News Data', 'data' =>
+                     $data]);
+         }
+        else
+        {
+        return Response::json(['code' => 400, 'status' => false, 'message' => 'Something wrong...', 'data' =>
+        ""]);
+
+        }
 
      }
 

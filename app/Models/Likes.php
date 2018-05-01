@@ -32,7 +32,7 @@ class Likes extends Model
                     return $query->where(function($query) use ($user_id,$id){
 
                         $query->where('user_id',$user_id)
-                            ->where('id',$id);
+                            ->where('news_id',$id);
             });
 
             }

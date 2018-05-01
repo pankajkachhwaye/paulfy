@@ -30,7 +30,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::post('/deleteCommentNews','RssfeedApiController@deleteCommentNews');
 
     Route::post('/bookmarkNews','RssfeedApiController@bookmarkNews');
-    Route::post('/getBookmarkNews','RssfeedApiController@getBookmarkNews');
-    Route::post('/deleteBookmarkNews','RssfeedApiController@deleteBookmarkNews');
+    Route::post('/getAllBokkmarkNews','RssfeedApiController@getAllBokkmarkNews');
+    Route::post('/deleteBookmarks','RssfeedApiController@deleteBookmarks');
 
 });
