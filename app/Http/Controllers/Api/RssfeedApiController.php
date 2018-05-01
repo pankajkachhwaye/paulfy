@@ -9,6 +9,7 @@ use App\Models\Rssfeed;
 use App\Models\Categories;
 use App\Models\Likes;
 use App\Models\Comment;
+use App\Models\Hidenews;
 use Response;
 use Carbon\Carbon;
 
@@ -19,7 +20,8 @@ class RssfeedApiController extends Controller
     public function getnewsByCategoriesId(Request $request)
     {
 
-        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('comment')->with('bookmark')
+        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment')
+            ->with('bookmark')
         ->orderBy('created_at','desc')
         ->get();
 
@@ -48,10 +50,28 @@ class RssfeedApiController extends Controller
                             break;
                         }
                     }
+
+
+                    //check hide or show
+                    $rssfeed[$k]->isHide= false;
+
+                    foreach ($rssfeed[$k]->hide as $value)
+                    {
+                        if($value->user_id== $request->user_id)
+                        {
+                            $rssfeed[$k]->isHide= true;
+                            break;
+                        }
+                    }
+
+
+
         /// add extra perametor
                     $rssfeed[$k]->description = str_replace('"', "'", $v->description);
                     $rssfeed[$k]->likeCount= count($rssfeed[$k]->likes);
                     $rssfeed[$k]->commentCount= count($rssfeed[$k]->comment);
+                    $rssfeed[$k]->hideCount= count($rssfeed[$k]->hide);
+                    $rssfeed[$k]->bookmarkCount= count($rssfeed[$k]->bookmark);
 
 
 
@@ -73,6 +93,15 @@ class RssfeedApiController extends Controller
     public  function getAllCategories()
     {
         $categories= Categories::all();
+
+        foreach ($categories as $k=> $v)
+        {
+            //$categories[$k]->image= Storage::get($categories[$k]->image);
+           // $categories[$k]->image= Storage::get('business.png');
+            $categories[$k]->image= asset('storage/'.$categories[$k]->image);
+
+        }
+
         return Response::json(['code' => 200,'status' => true, 'message' => 'All Categories','data'=>$categories]);
     }
 
@@ -242,5 +271,76 @@ class RssfeedApiController extends Controller
         }
 
      }
+     public function getAllHideNews(Request $request)
+     {
+
+            $data= Hidenews::with('news')->where('user_id',$request->user_id)->get();
+
+
+//            dd($data);
+         if($data)
+         {
+                 return Response::json(['code' => 200, 'status' => true, 'message' => 'All News Data', 'data' =>
+                     $data]);
+         }
+        else
+        {
+        return Response::json(['code' => 400, 'status' => false, 'message' => 'Something wrong...', 'data' =>
+        ""]);
+
+        }
+
+     }
+
+     public function hideunhideNews(Request $request)
+     {
+
+         $likes= array();
+         $likes['news_id']=$request->news_id;
+         $likes['user_id']=$request->user_id;
+//         $likes['like']=1;
+         $likes['created_at']=Carbon::now();
+
+//            $checklike= Likes::whereIn([['news_id', '=',$request->news_id] , ['user_id','=',$request->user_id]])
+//                ->first();
+         $CheckHide= Hidenews::CheckHide($request->news_id,$request->user_id)->first();
+
+         if ($CheckHide)
+         {
+             $data= Hidenews::Hide($request->user_id,$request->news_id)->delete();
+
+             if($data)
+             {
+                 return Response::json(['code' => 200,'status' => true, 'message' => ' Unhide successfully ',
+                     'data'=>""]);
+
+             }
+             else
+             {
+                 return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
+                     'data'=>""]);
+             }
+         }
+         else
+         {
+
+             $id = Hidenews::insertGetId($likes);
+             if(!empty($id))
+             {
+                 return Response::json(['code' => 200,'status' => true, 'message' => 'Hide successfully' ,
+                     'data'=>$likes]);
+             }
+             else
+             {
+                 return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
+                     'data'=>""]);
+
+             }
+
+         }
+
+
+     }
+
 
 }

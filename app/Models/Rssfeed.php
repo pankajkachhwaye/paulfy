@@ -4,6 +4,7 @@ namespace App\Models;
 use App\Models\Likes;
 use App\Models\Comment;
 use App\Models\Bookmark;
+use App\Models\Hidenews;
 
 
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,11 @@ class Rssfeed extends Model
     public function bookmark()
     {
         return $this->hasMany(Bookmark::class,'news_id');
+    }
+
+    public function hide()
+    {
+        return $this->hasMany(Hidenews::class,'news_id');
     }
 
 }

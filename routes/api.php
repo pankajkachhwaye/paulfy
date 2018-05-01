@@ -33,4 +33,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::post('/getAllBokkmarkNews','RssfeedApiController@getAllBokkmarkNews');
     Route::post('/deleteBookmarks','RssfeedApiController@deleteBookmarks');
 
+    Route::post('/hideunhideNews','RssfeedApiController@hideunhideNews');
+    Route::post('/getAllHideNews','RssfeedApiController@getAllHideNews');
+
+
+
 });
