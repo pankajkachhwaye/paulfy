@@ -20,10 +20,16 @@ class RssfeedApiController extends Controller
     public function getnewsByCategoriesId(Request $request)
     {
 
-        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment')
-            ->with('bookmark')
-        ->orderBy('created_at','desc')
-        ->get();
+//        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment')
+//            ->with('bookmark')
+//        ->orderBy('created_at','desc')
+//        ->get()->sortByDesc(function($rssfeed)
+//            {
+//                return $rssfeed->likes->count();
+//            });
+        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment')->with('bookmark')
+            ->withCount('likes')->withCount('comment')->orderBy('created_at','desc')->orderBy('likes_count', 'desc')->orderBy('comment_count', 'desc')
+            ->get();
 
             if($rssfeed) {
                 foreach ($rssfeed as $k => $v) {
