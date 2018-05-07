@@ -94,7 +94,7 @@ class RssfeedApiController extends Controller
     {
         $categories= Categories::all();
 
-        foreach ($categories as $k=> $v)
+        foreach($categories as $k=> $v)
         {
             //$categories[$k]->image= Storage::get($categories[$k]->image);
            // $categories[$k]->image= Storage::get('business.png');
@@ -194,6 +194,7 @@ class RssfeedApiController extends Controller
 
              return Response::json(['code' => 400,'status' => false, 'message' => 'News Already Save' ,
                  'data'=>$bookmark]);
+
          }
          else
          {
