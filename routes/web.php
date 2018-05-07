@@ -24,6 +24,7 @@ Route::group(['prefix' => 'api-details'],function (){
     Route::get('/getAllCategories','ApiPanelController@getAllCategories');
     Route::get('/login-form','ApiPanelController@loginForm');
     Route::get('/getnewsByCategoriesId','ApiPanelController@getnewsByCategoriesId');
+    Route::get('/getnewsLikesComment','ApiPanelController@getnewsLikesComment');
     Route::get('/likeNews','ApiPanelController@likeNews');
     Route::get('/commentOnNews','ApiPanelController@commentOnNews');
     Route::get('/bookmarkNews','ApiPanelController@bookmarkNews');

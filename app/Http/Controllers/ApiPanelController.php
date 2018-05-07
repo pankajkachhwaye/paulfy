@@ -35,6 +35,14 @@ class ApiPanelController extends Controller
 
     }
 
+    public function getnewsLikesComment()
+    {
+        $users= AppUser::all();
+         $categories= Categories::all();
+         return view('api.user.getnewsLikesComment',compact('categories','users'));
+
+    }
+
     public function likeNews()
     {
         $news= Rssfeed::all();

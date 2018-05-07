@@ -23,6 +23,7 @@
         <p><a href="{{url('/api-details/login-form')}}">User Login</a></p>
         <p><a href="{{url('/api-details/getAllCategories')}}">getAllCategories</a></p>
         <p><a href="{{url('/api-details/getnewsByCategoriesId')}}">getnewsByCategoriesId</a></p>
+        <p><a href="{{url('/api-details/getnewsLikesComment')}}">getnewsLikesComment <span style="color: red">New</span></a></>
         <p><a href="{{url('/api-details/likeNews')}}">likeNews</a></p>
         <p><a href="{{url('/api-details/commentOnNews')}}">commentOnNews</a></p>
         <p><a href="{{url('/api-details/bookmarkNews')}}">bookmarkNews</a></p>
