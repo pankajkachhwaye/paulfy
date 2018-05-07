@@ -23,6 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::get('/getAllCategories','RssfeedApiController@getAllCategories');
     Route::post('/getAllCategories','RssfeedApiController@getAllCategories');
     Route::post('/getnewsByCategoriesId','RssfeedApiController@getnewsByCategoriesId');
+    Route::post('/getnewsLikesComment','RssfeedApiController@getnewsLikesComment');
     Route::post('/likeNews','RssfeedApiController@likeNews');
     Route::post('/dislikeNews','RssfeedApiController@dislikeNews');
 

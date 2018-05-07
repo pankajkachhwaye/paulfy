@@ -20,11 +20,17 @@ class RssfeedApiController extends Controller
     public function getnewsByCategoriesId(Request $request)
     {
 
-        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment')
-            ->with('bookmark')
-        ->orderBy('created_at','desc')
-        ->get();
-
+//        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment')
+//            ->with('bookmark')
+//        ->orderBy('created_at','desc')
+//        ->get()->sortByDesc(function($rssfeed)
+//            {
+//                return $rssfeed->likes->count() + $rssfeed->comment->count();
+//            });
+        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment')->with('bookmark')
+            ->withCount('likes')->withCount('comment')->orderBy('created_at','desc')->orderBy('likes_count', 'desc')->orderBy('comment_count', 'desc')
+            ->get();
+//            dd($rssfeed);
             if($rssfeed) {
                 foreach ($rssfeed as $k => $v) {
 
@@ -81,6 +87,82 @@ class RssfeedApiController extends Controller
 
                 return Response::json(['code' => 200, 'status' => true, 'message' => 'All News Data', 'data' =>
                     $rssfeed]);
+            }
+            else
+            {
+                return Response::json(['code' => 400, 'status' => false, 'message' => 'Something wrong...', 'data' =>
+                    ""]);
+
+            }
+    }
+
+    public function getnewsLikesComment(Request $request)
+    {
+
+        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment')
+            ->with('bookmark')
+        ->orderBy('created_at','desc')
+        ->get()->sortByDesc(function($rssfeed)
+            {
+                return $rssfeed->likes->count() + $rssfeed->comment->count();
+            });
+
+            if($rssfeed) {
+                foreach ($rssfeed as $k => $v) {
+
+                    $rssfeed[$k]->isLike= false;
+
+                      foreach ($rssfeed[$k]->likes as $value)
+                      {
+                          if($value->user_id== $request->user_id)
+                          {
+                              $rssfeed[$k]->isLike= true;
+                              break;
+                          }
+                      }
+
+                      // chek is news save or not
+                    $rssfeed[$k]->isSave= false;
+
+                    foreach ($rssfeed[$k]->bookmark as $value)
+                    {
+                        if($value->user_id== $request->user_id)
+                        {
+                            $rssfeed[$k]->isSave= true;
+                            break;
+                        }
+                    }
+
+
+                    //check hide or show
+                    $rssfeed[$k]->isHide= false;
+
+                    foreach ($rssfeed[$k]->hide as $value)
+                    {
+                        if($value->user_id== $request->user_id)
+                        {
+                            $rssfeed[$k]->isHide= true;
+                            break;
+                        }
+                    }
+
+
+
+        /// add extra perametor
+                    $rssfeed[$k]->description = str_replace('"', "'", $v->description);
+                    $rssfeed[$k]->likeCount= count($rssfeed[$k]->likes);
+                    $rssfeed[$k]->commentCount= count($rssfeed[$k]->comment);
+                    $rssfeed[$k]->hideCount= count($rssfeed[$k]->hide);
+                    $rssfeed[$k]->bookmarkCount= count($rssfeed[$k]->bookmark);
+
+
+
+//                    $rssfeed[$k]->comment =  ;
+                }
+
+//                dd($rssfeed);
+                return Response::json(['code' => 200, 'status' => true, 'message' => 'All News Data', 'data' =>
+                    array_values($rssfeed->toArray())]);
             }
             else
             {
