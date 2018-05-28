@@ -10,8 +10,10 @@ use App\Models\Categories;
 use App\Models\Likes;
 use App\Models\Comment;
 use App\Models\Hidenews;
+use App\Models\AppUser;
 use Response;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class RssfeedApiController extends Controller
 {
@@ -424,6 +426,44 @@ class RssfeedApiController extends Controller
 
 
      }
+
+     public function forgetPassword(Request $request)
+     {
+
+         $password['user_id']=$request->user_id;
+         $password['new_password']= Hash::make($request->new_password) ;
+
+         $CheckUser= AppUser::checkUser($request->user_id)->first();
+
+         if(count($CheckUser))
+         {
+
+
+             AppUser::where('id', $request->user_id)
+                                 ->update(['password' => $password['new_password']]);
+             return Response::json(['code' => 200,'status' => true, 'message' => ' data found ',
+                 'password'=>$request->new_password]);
+
+
+         }
+         else
+         {
+             return Response::json(['code' => 400,'status' => false, 'message' => ' user not found'
+                ]);
+         }
+
+
+
+
+
+
+
+
+
+     }
+
+
+
 
 
 }

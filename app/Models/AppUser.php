@@ -28,5 +28,14 @@ class AppUser extends Model
 
         });
 
+
+
+    }
+
+    public function scopecheckUser($query,$value){
+        return $query->where(function ($query) use ($value){
+
+            $query->where('id',$value);
+        });
     }
 }
