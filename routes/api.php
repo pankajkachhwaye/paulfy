@@ -38,6 +38,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::post('/getAllHideNews','RssfeedApiController@getAllHideNews');
 
     Route::post('/forgetPassword','RssfeedApiController@forgetPassword');
+    Route::post('/checkEmail','RssfeedApiController@checkEmail');
 
 
 

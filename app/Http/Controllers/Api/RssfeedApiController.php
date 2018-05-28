@@ -383,7 +383,7 @@ class RssfeedApiController extends Controller
          $likes= array();
          $likes['news_id']=$request->news_id;
          $likes['user_id']=$request->user_id;
-//         $likes['like']=1;
+//        $likes['like']=1;
          $likes['created_at']=Carbon::now();
 
 //            $checklike= Likes::whereIn([['news_id', '=',$request->news_id] , ['user_id','=',$request->user_id]])
@@ -453,13 +453,24 @@ class RssfeedApiController extends Controller
          }
 
 
+     }
+
+     public function checkEmail(Request $request)
+     {
+         $CheckUser= AppUser::checkUserEmail($request->email)->first();
+
+         if(count($CheckUser))
+         {
 
 
-
-
-
-
-
+             return Response::json(['code' => 200,'status' => true, 'message' => ' Email found ',
+                 'data'=>$CheckUser]);
+         }
+         else
+         {
+             return Response::json(['code' => 400,'status' => false, 'message' => ' User not found'
+             ]);
+         }
      }
 
 

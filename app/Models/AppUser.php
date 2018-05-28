@@ -38,4 +38,11 @@ class AppUser extends Model
             $query->where('id',$value);
         });
     }
+
+    public function scopecheckUserEmail($query,$value){
+        return $query->where(function ($query) use ($value){
+
+            $query->where('email',$value);
+        });
+    }
 }
