@@ -438,21 +438,16 @@ class RssfeedApiController extends Controller
          if(count($CheckUser))
          {
 
-
              AppUser::where('id', $request->user_id)
                                  ->update(['password' => $password['new_password']]);
-             return Response::json(['code' => 200,'status' => true, 'message' => ' data found ',
+             return Response::json(['code' => 200,'status' => true, 'message' => ' Password change  ',
                  'password'=>$request->new_password]);
-
-
          }
          else
          {
              return Response::json(['code' => 400,'status' => false, 'message' => ' user not found'
                 ]);
          }
-
-
      }
 
      public function checkEmail(Request $request)
@@ -461,8 +456,6 @@ class RssfeedApiController extends Controller
 
          if(count($CheckUser))
          {
-
-
              return Response::json(['code' => 200,'status' => true, 'message' => ' Email found ',
                  'data'=>$CheckUser]);
          }
@@ -473,8 +466,9 @@ class RssfeedApiController extends Controller
          }
      }
 
+     public function editProfile()
+     {
 
-
-
+     }
 
 }

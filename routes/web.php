@@ -14,11 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/demo','Rss\RssfeedController@demo');
-Route::get('/updateRssFeeds','Rss\RssfeedController@updateRssFeeds');
-Route::get('/updateFeeds','Rss\RssfeedController@updateFeeds');
+        Route::get('/demo','Rss\RssfeedController@demo');
+        Route::get('/updateRssFeeds','Rss\RssfeedController@updateRssFeeds');
+        Route::get('/updateFeeds','Rss\RssfeedController@updateFeeds');
 
-Route::group(['prefix' => 'api-details'],function (){
+    Route::group(['prefix' => 'api-details'],function (){
     Route::get('/','ApiPanelController@index');
     Route::get('/register-form','ApiPanelController@registerForm');
     Route::get('/getAllCategories','ApiPanelController@getAllCategories');

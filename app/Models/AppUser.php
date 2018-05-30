@@ -45,4 +45,6 @@ class AppUser extends Model
             $query->where('email',$value);
         });
     }
+
+
 }

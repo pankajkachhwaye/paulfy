@@ -82,6 +82,7 @@ class RssfeedController extends Controller
                  $rssfeed->title=$item->get_title();
                  $rssfeed->title_url= $item->get_permalink();
                  $rssfeed->description=$item->get_content();
+                 $rssfeed->source=$item->get_base();
                  $rssfeed->news_upload_time=$item->get_date('j F Y | g:i a');
                  $rssfeed->save();
              }
@@ -112,6 +113,7 @@ class RssfeedController extends Controller
                 $rssfeed->title=$item->get_title();
                 $rssfeed->title_url= $item->get_permalink();
                 $rssfeed->description=$item->get_content();
+                $rssfeed->source=$item->get_base();
                 $rssfeed->news_upload_time=$item->get_date('j F Y | g:i a');
                 $rssfeed->save();
             }
@@ -141,6 +143,7 @@ class RssfeedController extends Controller
                 $rssfeed->title=$item->get_title();
                 $rssfeed->title_url= $item->get_permalink();
                 $rssfeed->description=$item->get_content();
+                $rssfeed->source=$item->get_base();
                 $rssfeed->news_upload_time=$item->get_date('j F Y | g:i a');
                 $rssfeed->save();
             }
@@ -169,6 +172,7 @@ class RssfeedController extends Controller
                         $rssfeed->title=$item->get_title();
                         $rssfeed->title_url= $item->get_permalink();
                         $rssfeed->description=$item->get_content();
+                        $rssfeed->source=$item->get_base();
                         $rssfeed->news_upload_time=$item->get_date('j F Y | g:i a');
                         $rssfeed->save();
                     }
@@ -200,6 +204,7 @@ class RssfeedController extends Controller
                 $rssfeed->title=$item->get_title();
                 $rssfeed->title_url= $item->get_permalink();
                 $rssfeed->description=$item->get_content();
+                $rssfeed->source=$item->get_base();
                 $rssfeed->news_upload_time=$item->get_date('j F Y | g:i a');
                 $rssfeed->save();
             }
@@ -208,29 +213,26 @@ class RssfeedController extends Controller
         //        //////////======================================================================
 
 
-
-
-
-
-
     }
 
     public function updateFeeds()
     {
 
 
-        $businessfeed= \Feeds::make(['http://feeds.feedburner.com/entrepreneur/latest','http://rss.cnn
-        .com/rss/money_news_international.rss','https://nairametrics.com/feed/','http://markets.businessinsider.com/rss/news','https://www.cnbcafrica.com/feed/'],100,true);
-
+//        $businessfeed= \Feeds::make(['http://feeds.feedburner.com/entrepreneur/latest','http://rss.cnn
+//        .com/rss/money_news_international.rss','https://nairametrics.com/feed/','http://markets.businessinsider.com/rss/news','https://www.cnbcafrica.com/feed/'],100,true);
+//
         $techfeed= \Feeds::make(['https://techcrunch.com/feed/','https://techmoran.com/feed/','https://www.techinasia.com/feed','https://techpoint.ng/feed/','http://disrupt-africa.com/feed/']);
-        $newsfeed= \Feeds::make(['http://rss.cnn.com/rss/edition.rss','https://static01.nyt.com/services/xml/rss','https://www.naija.ng/rss/all.rss','https://www.vanguardngr.com/news/feed/','https://www.vanguardngr.com/news/feed/']);
-        $sportfeed= \Feeds::make(['http://www.goal.com/en/feeds/news?fmt=rss&ICID=HP','https://www.completesportsnigeria.com/feed/','http://www.espnfc.com/rss','https://www.fourfourtwo.com/rss-settat/rss','https://www.thesportreview.com/feed/']);
-        $entertenmainfeed= \Feeds::make(['https://www.lindaikejisblog.com/feed','http://www.gossipmill.com/feed/','http://misspetitenaijablog.com/feed/','https://www.kemifilani.com/feed','https://lailasnews.com/feed/']);
+//        $newsfeed= \Feeds::make(['http://rss.cnn.com/rss/edition.rss','https://static01.nyt.com/services/xml/rss','https://www.naija.ng/rss/all.rss','https://www.vanguardngr.com/news/feed/','https://www.vanguardngr.com/news/feed/']);
+//        $sportfeed= \Feeds::make(['http://www.goal.com/en/feeds/news?fmt=rss&ICID=HP','https://www.completesportsnigeria.com/feed/','http://www.espnfc.com/rss','https://www.fourfourtwo.com/rss-settat/rss','https://www.thesportreview.com/feed/']);
+//        $entertenmainfeed= \Feeds::make(['https://www.lindaikejisblog.com/feed','http://www.gossipmill.com/feed/','http://misspetitenaijablog.com/feed/','https://www.kemifilani.com/feed','https://lailasnews.com/feed/']);
 
 
-        $feed = \Feeds::make('https://www.lindaikejisblog.com/feed',100,true);
+      //  $feed = \Feeds::make('https://www.lindaikejisblog.com/feed',10,true);
 
-        $feed=$entertenmainfeed;
+        $feed=$techfeed;
+
+//        dd($feed->get_base());
 
         $data = array(
             'title'     => $feed->get_title(),
@@ -240,7 +242,9 @@ class RssfeedController extends Controller
 
         foreach ($data['items'] as $item)
         {
-            print_r($item->get_content());
+            //($item->get_content());
+//            echo $item->get_title();
+           echo  $item->get_base()."<br>";
         }
 
 
