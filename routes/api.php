@@ -27,6 +27,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     Route::post('/likeNews','RssfeedApiController@likeNews');
     Route::post('/dislikeNews','RssfeedApiController@dislikeNews');
 
+    Route::post('/replyOnComment','RssfeedApiController@replyOnComment');
     Route::post('/commentNews','RssfeedApiController@commentNews');
     Route::post('/deleteCommentNews','RssfeedApiController@deleteCommentNews');
 

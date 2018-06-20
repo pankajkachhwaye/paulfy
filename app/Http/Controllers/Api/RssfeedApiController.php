@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 //use http\Env\Response;
 use App\Models\Bookmark;
+use App\Models\Reply;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Rssfeed;
@@ -29,10 +30,17 @@ class RssfeedApiController extends Controller
 //            {
 //                return $rssfeed->likes->count() + $rssfeed->comment->count();
 //            });
-        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment')->with('bookmark')
+        $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment.user')->with('comment.reply')->with('comment.reply.user')->with('bookmark')
             ->withCount('likes')->withCount('comment')->orderBy('created_at','desc')->orderBy('likes_count', 'desc')->orderBy('comment_count', 'desc')
-            ->get();
-//            dd($rssfeed);
+            ->get()->take(200);
+
+// $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with(['comment.class'=>function($query){
+//             $query->user;
+//         }])->with('bookmark')
+//             ->withCount('likes')->withCount('comment')->orderBy('created_at','desc')->orderBy('likes_count', 'desc')->orderBy('comment_count', 'desc')
+//             ->get();
+
+            //dd($rssfeed);
             if($rssfeed) {
                 foreach ($rssfeed as $k => $v) {
 
@@ -103,11 +111,13 @@ class RssfeedApiController extends Controller
 
         $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment')
             ->with('bookmark')
-        ->orderBy('created_at','desc')
+        ->orderBy('created_at','desc')->take(200)
         ->get()->sortByDesc(function($rssfeed)
             {
                 return $rssfeed->likes->count() + $rssfeed->comment->count();
             });
+
+//        dd($rssfeed->toArray());
 
             if($rssfeed) {
                 foreach ($rssfeed as $k => $v) {
@@ -251,6 +261,26 @@ class RssfeedApiController extends Controller
          {
              return Response::json(['code' => 200,'status' => true, 'message' => 'Comment Successfully' ,
                  'data'=>$comment]);
+         }
+         else
+         {
+             return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
+                 'data'=>""]);
+
+         }
+
+     }
+
+     public function replyOnComment(Request $request){
+        $reply = new Reply();
+         $reply->comment_id=$request->comment_id;
+         $reply->news_id=$request->news_id;
+         $reply->user_id=$request->user_id;
+         $reply->reply=$request->reply;
+         if( $reply->save())
+         {
+             return Response::json(['code' => 200,'status' => true, 'message' => 'Reply on comment Successfully' ,
+                 'data'=>$reply]);
          }
          else
          {

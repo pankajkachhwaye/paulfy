@@ -19,7 +19,8 @@ class Rssfeed extends Model
 
     public function comment()
     {
-        return $this->hasMany(Comment::class,'news_id');
+        // return $this->hasMany(Comment::class,'news_id');
+         return $this->hasMany(Comment::class,'news_id')->with('user');
     }
 
     public function bookmark()

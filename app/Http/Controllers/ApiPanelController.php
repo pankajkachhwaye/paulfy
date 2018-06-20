@@ -6,6 +6,7 @@ use App\Models\Categories;
 use App\Models\AppUser;
 use App\Models\Rssfeed;
 use Illuminate\Http\Request;
+use Response;
 
 class ApiPanelController extends Controller
 {
@@ -13,6 +14,12 @@ class ApiPanelController extends Controller
 
     public function index(){
         return view('api.apidetails');
+    }
+
+    public function getCommetNews($id){
+      $news= Rssfeed::find($id);
+      $comment = $news->comment()->get();
+      return Response::json($comment);
     }
 
     public function registerForm(){
@@ -55,6 +62,13 @@ class ApiPanelController extends Controller
         $news= Rssfeed::all();
         $users= AppUser::all();
         return view('api.user.commentOnNews',compact('news','users'));
+    }
+
+    public function replyOnCommentForm()
+    {
+        $news= Rssfeed::all()->take(200);
+        $users= AppUser::all();
+        return view('api.user.replycomment',compact('news','users'));
     }
     public function bookmarkNews()
     {
