@@ -70,6 +70,12 @@ class ApiPanelController extends Controller
         $users= AppUser::all();
         return view('api.user.replycomment',compact('news','users'));
     }
+    public function upvoteOnCommentForm()
+    {
+        $news= Rssfeed::all();
+        $users= AppUser::all();
+        return view('api.user.upvotecommnet',compact('news','users'));
+    }
     public function bookmarkNews()
     {
         $news= Rssfeed::all();

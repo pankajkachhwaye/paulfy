@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 //use http\Env\Response;
 use App\Models\Bookmark;
 use App\Models\Reply;
+use App\Models\UpvoteComment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Rssfeed;
@@ -31,7 +32,7 @@ class RssfeedApiController extends Controller
 //                return $rssfeed->likes->count() + $rssfeed->comment->count();
 //            });
         $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with('comment.user')->with('comment.reply')->with('comment.reply.user')->with('bookmark')
-            ->withCount('likes')->withCount('comment')->orderBy('created_at','desc')->orderBy('likes_count', 'desc')->orderBy('comment_count', 'desc')
+            ->withCount('likes')->withCount('comment')->with('comment.upvoteComment')->orderBy('created_at','desc')->orderBy('likes_count', 'desc')->orderBy('comment_count', 'desc')
             ->get()->take(200);
 
 // $rssfeed= Rssfeed::whereIn('categories_id',$request->categories_id)->with('likes')->with('hide')->with(['comment.class'=>function($query){
@@ -261,6 +262,28 @@ class RssfeedApiController extends Controller
          {
              return Response::json(['code' => 200,'status' => true, 'message' => 'Comment Successfully' ,
                  'data'=>$comment]);
+         }
+         else
+         {
+             return Response::json(['code' => 400,'status' => false, 'message' => 'Something Wrong.. ',
+                 'data'=>""]);
+
+         }
+
+     }
+
+     public function upvoteOnComment(Request $request)
+     {
+
+                $upvotecomment= new UpvoteComment();
+         $upvotecomment->user_id=$request->user_id;
+         $upvotecomment->comment_id=$request->comment_id;
+              //  $comment->save();
+
+         if( $upvotecomment->save())
+         {
+             return Response::json(['code' => 200,'status' => true, 'message' => 'Upvote on comment Successfully' ,
+                 'data'=>$upvotecomment]);
          }
          else
          {

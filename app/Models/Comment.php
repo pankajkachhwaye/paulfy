@@ -12,6 +12,10 @@ class Comment extends Model
         return $this->hasMany('App\Models\Reply','comment_id');
     }
 
+    public function upvoteComment(){
+        return $this->hasMany('App\Models\UpvoteComment','comment_id');
+    }
+
     public function  scopeDeleteComment($query,$user_id,$comment_id )
     {
         return $query->where(function($query) use  ($user_id,$comment_id) {

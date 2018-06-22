@@ -28,6 +28,7 @@ Route::get('/', function () {
     Route::get('/getnewsLikesComment','ApiPanelController@getnewsLikesComment');
     Route::get('/likeNews','ApiPanelController@likeNews');
     Route::get('/commentOnNews','ApiPanelController@commentOnNews');
+    Route::get('/upvoteOnCommentForm','ApiPanelController@upvoteOnCommentForm');
     Route::get('/replyOnCommentForm','ApiPanelController@replyOnCommentForm');
     Route::get('/bookmarkNews','ApiPanelController@bookmarkNews');
     Route::get('/deleteComment','ApiPanelController@deleteComment');

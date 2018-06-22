@@ -11,7 +11,7 @@
     <script>
         $( function() {
             $( "#accordion" ).accordion();
-        } );
+        });
     </script>
 </head>
 <body>
@@ -26,6 +26,7 @@
         <p><a href="{{url('/api-details/getnewsLikesComment')}}">getnewsLikesComment <span style="color: red">New</span></a></>
         <p><a href="{{url('/api-details/likeNews')}}">likeNews</a></p>
         <p><a href="{{url('/api-details/commentOnNews')}}">commentOnNews</a></p>
+        <p><a href="{{url('/api-details/upvoteOnCommentForm')}}">Upvote on comment<span style="color: red">New</span></a></p>
         <p><a href="{{url('/api-details/replyOnCommentForm')}}">Reply On Comment <span style="color: red">New</span></a></p>
         <p><a href="{{url('/api-details/bookmarkNews')}}">bookmarkNews</a></p>
         <p><a href="{{url('/api-details/deleteComment')}}">deleteComment</a></p>
@@ -34,6 +35,7 @@
     </div>
 
 </div>
+
 
 
 
